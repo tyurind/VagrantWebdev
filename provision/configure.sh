@@ -74,9 +74,9 @@ apt-get install -y dnsmasq exim4 \
     python-pip python-imaging \
     mysql-server mysql-client memcached \
     sqlite sqlite3 postgresql sphinxsearch redis-server \
-    git vim curl mc man make
+    git vim curl mc man make zip
 
-apt-get autoremove
+apt-get -y autoremove
 
 # Installations from the PEAR, PECL and PyPI; if some of this brings errors, just remove it
 echo; 
@@ -85,7 +85,7 @@ echo "# =========================================="
 
 pear config-set auto_discover 1
 pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHPUnit_SkeletonGenerator
-pear install components.ez.no/base ezc/base ezc/database ezc/consoletools
+pear install components.ez.no/base ezc/database ezc/consoletools
 
 if [ ! -f /usr/local/bin/composer ]; then
     cd /usr/local/bin
