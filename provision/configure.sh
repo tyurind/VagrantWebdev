@@ -62,20 +62,23 @@ echo "# =========================================="
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
+# apt-get install -y python-software-properties
+
+# deb http://http.debian.net/debian stable main
 
 echo; 
 echo "# System install..."
 echo "# =========================================="
-apt-get install -y dnsmasq exim4 \
-    apache2 libapache2-mod-macro \
-    php5 php-pear php5-dev php5-mysql php5-pgsql php5-sqlite php5-memcache \
-    php5-gd php5-xdebug php5-curl php5-mcrypt php5-cli php5-xsl \
-    python-mysqldb python-pygresql python-psycopg2 python-sqlite python-redis python-memcache \
-    python-pip python-imaging \
-    mysql-server mysql-client memcached \
-    sqlite sqlite3 postgresql sphinxsearch redis-server \
-    git vim curl mc man make zip
-
+apt-get install -y dnsmasq exim4 
+apt-get install -y git vim curl mc man make zip
+apt-get install -y apache2 libapache2-mod-macro 
+apt-get install -y php5 php-pear php5-dev php5-mysql php5-pgsql php5-sqlite php5-memcache \
+                   php5-gd php5-xdebug php5-curl php5-mcrypt php5-cli php5-xsl 
+apt-get install -y python-mysqldb python-pygresql python-psycopg2 python-sqlite python-redis python-memcache \
+                   python-pip python-imaging 
+apt-get install -y mysql-server mysql-client memcached \
+                   sqlite sqlite3 postgresql sphinxsearch redis-server 
+# apt-get install -y ant
 apt-get -y autoremove
 
 # Installations from the PEAR, PECL and PyPI; if some of this brings errors, just remove it
@@ -88,14 +91,12 @@ pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHPUnit_SkeletonGene
 pear install components.ez.no/base ezc/database ezc/consoletools
 
 if [ ! -f /usr/local/bin/composer ]; then
-    cd /usr/local/bin
-    curl -sS https://getcomposer.org/installer | php
-    chmod +x composer.phar
-    mv composer.phar /usr/local/bin/composer
+    cd /usr/local/bin && curl -sS https://getcomposer.org/installer | php \
+        && chmod +x composer.phar \
+        && mv composer.phar /usr/local/bin/composer
     cd "$TMP_PWD_DIR"
-else 
-    composer selfupdate
-fi    
+fi 
+
 
 pip install sphinxsearch
 
