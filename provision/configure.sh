@@ -89,6 +89,9 @@ echo "# =========================================="
 pear config-set auto_discover 1
 pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHPUnit_SkeletonGenerator
 pear install components.ez.no/base ezc/database ezc/consoletools
+pear update-channels
+pear upgrade-all
+
 
 if [ ! -f /usr/local/bin/composer ]; then
     cd /usr/local/bin && curl -sS https://getcomposer.org/installer | php \
