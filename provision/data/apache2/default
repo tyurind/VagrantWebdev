@@ -27,7 +27,7 @@
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
-    LogLevel error
+    LogLevel warn
 </VirtualHost>
 
 <Macro VHost $domain $dir>
