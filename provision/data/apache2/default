@@ -27,7 +27,7 @@
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
-    LogLevel warn
+    LogLevel error
 </VirtualHost>
 
 <Macro VHost $domain $dir>
@@ -58,25 +58,14 @@
             Allow from all
         </Directory>
 
-        <IfModule php5_module>
-            php_value memory_limit 128M
-            php_value max_execution_time 150
-            php_value request_order GP
-            # php_value date.timezone Europe/Moscow
-        </IfModule>
-
-        ErrorLog ${APACHE_LOG_DIR}/error-$domain.log
-        CustomLog ${APACHE_LOG_DIR}/error-$domain.log
-        # ErrorLog  $dir/logs/error.log
-        # CustomLog $dir/logs/access.log common
+        ErrorLog ${APACHE_LOG_DIR}/error.log
 
         # Possible values include: debug, info, notice, warn, error, crit,
         # alert, emerg.
-        LogLevel warn
-
-        Include $dir/*.host.conf
+        LogLevel error
     </VirtualHost>
 </Macro>
+
 #
 # Vhosts begin
 #
