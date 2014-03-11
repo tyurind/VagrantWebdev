@@ -226,3 +226,8 @@ service exim4 start
 # After configuring
 #
 /usr/bin/indexer --rotate --all --config /etc/sphinxsearch/sphinx.conf
+
+
+echo ">>>> END"
+echo "================================"
+echo $TMP_PWD_DIR
