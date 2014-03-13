@@ -24,6 +24,16 @@ _cdruntime()
   cd "/vagrant/runtime"
 }
 
+apt-install()
+{
+  for i in $@ do
+    echo "Running initial-setup apt-get: $i"
+    apt-get install -y "$1" >/dev/null
+  done
+}
+
+
+
 if [[ ! -d "/vagrant/runtime/tmp" ]]; then
   mkdir -p "/vagrant/runtime/tmp"
 fi
@@ -56,44 +66,46 @@ touch /.vagrant-stuff/ initial-setup-repo-update
 # System
 ################################################################
 
-echo; 
+echo;  
 echo "# System install..."
 echo "# =========================================="
 
-echo ">> [0/6] Install dnsmasq exim4 ..."
+LN="
+"
+echo "$LN [0/6] Install dnsmasq exim4 ..."
 apt-get install -y dnsmasq exim4 
 
-echo ">> [1.0/6] Install git ..."
+echo "$LN [1.0/6] Install git ..."
 apt-get install -y man 
 
-echo ">> [1.3/6] Install git ..."
+echo "$LN [1.3/6] Install git ..."
 apt-get install -y git 
 
-echo ">> [1.6/6] Install vim ..."
+echo "$LN [1.6/6] Install vim ..."
 apt-get install -y vim 
 
-echo ">> [1.9/6] Install curl mc man make zip ..."
+echo "$LN [1.9/6] Install curl mc man make zip ..."
 apt-get install -y curl mc make zip
 
-echo ">> [2/6] Install apache2 libapache2-mod-macro ..."
+echo "$LN [2/6] Install apache2 libapache2-mod-macro ..."
 apt-get install -y apache2 libapache2-mod-macro 
 
-echo ">> [3/6] Install PHP ..."
-apt-get install -y php5 php-pear php5-dev php5-mysql \
-               php5-pgsql php5-sqlite php5-memcache \
+echo "$LN [3/6] Install PHP ..."
+apt-get install -y php5 php5-cli \
+               php5-mysql php5-sqlite php5-memcache \
                php5-gd php5-xdebug php5-curl \
-               php5-mcrypt php5-cli php5-xsl 
+               php5-mcrypt php5-xsl php-pear
 
-echo ">> [4/6] Install python ..."
+echo "$LN [4/6] Install python ..."
 apt-get install -y python-mysqldb python-pygresql python-psycopg2 \
                python-sqlite python-redis python-memcache \
                python-pip python-imaging 
 
-echo ">> [5/6] MySQL ..."
+echo "$LN [5/6] MySQL ..."
 apt-get install -y mysql-server mysql-client memcached \
                sqlite sqlite3 postgresql sphinxsearch redis-server 
 
-echo ">> [6/6] Running apt-get -y autoremove..."
+echo "$LN [6/6] Running apt-get -y autoremove..."
 apt-get -y autoremove
 
 echo "# Finished system install"
@@ -189,16 +201,17 @@ fi
 ################################################################
 # DROPBOX_INSTALL
 ################################################################
+
 # Установка программы Dropbox из командной строки
 # cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -
 # ~/.dropbox-dist/dropboxd
-if [[ "$YANDEX_INSTALL" != "" ]]; then
+if [[ "$DROPBOX_INSTALL" != "" ]]; then
   if  [ -f /usr/local/bin/dropbox ]; then
       cd /usr/local/bin
       wget -O dropbox.py https://www.dropbox.com/download?dl=packages/dropbox.py
       chmod +x dropbox.py
       mv dropbox.py /usr/local/bin/dropbox
-      
+
       _cdhome
   fi
 fi
