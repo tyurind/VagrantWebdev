@@ -6,17 +6,17 @@ vagrantfile-local:
         server_ip: 192.168.2.10
         memory: 1024
         provision:
-            # p1:
-            #     type: shell
-            #     path: provision/configure.sh
-            #     args:
-            #         - cli
-            p2:
+            p1:
                 type: shell
-                path: provision/shell/runtime.sh
-                args:
-                    - val1
-                    - o pt1
+                path: provision/shell/initial-setup.sh
+            p2:
+                path: provision/shell/configure.sh
+            # p3:
+            #     type: shell
+            #     path: provision/shell/runtime.sh
+            #     args:
+            #         - val1
+            #         - o pt1
         synced_folder:
             s1:
                 id: vagrant-root

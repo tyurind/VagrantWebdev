@@ -32,12 +32,18 @@ Vagrant.configure("2") do |config|
   end
 
   data['vm']['provision'].each do |i, provision|   
-    args = provision['args'].join(' ')
     type  = (provision['type'] != '') ? provision['type'] : "shell"
-    config.vm.provision "#{type}" do |s|
-      s.path = "#{provision['path']}"
-      s.args = "#{args}"
+    if !provision['args'].nil? 
+      args = provision['args'].join(' ')
+      config.vm.provision "#{type}" do |s|
+        s.path = "#{provision['path']}"
+        s.args = "#{args}"
+      end
+    else
+      config.vm.provision :shell, :path => "#{provision['path']}"
     end
+
+
   end
 end
 

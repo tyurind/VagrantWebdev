@@ -4,18 +4,39 @@ VAGRANT_CORE_FOLDER=$(echo "$1")
 TMP_PWD_DIR=$(pwd)
 
 
+JAVA_INSTALL=
+YANDEX_INDTALL=
+
+
+JAVA_URL="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-linux-i586.gz"
+ANT_URL="http://apache-mirror.rbc.ru/pub/apache//ant/binaries/apache-ant-1.9.3-bin.tar.gz"
+
+
 # OS=$(/bin/bash "${VAGRANT_CORE_FOLDER}/shell/os-detect.sh" ID)
 # CODENAME=$(/bin/bash "${VAGRANT_CORE_FOLDER}/shell/os-detect.sh" CODENAME)
 
+_cdhome()
+{
+  cd "$TMP_PWD_DIR" 
+}
+_cdruntime()
+{
+  cd "/vagrant/runtime"
+}
 
-if [[ ! -d /.puphpet-stuff ]]; then
-    mkdir /.puphpet-stuff
+if [[ ! -d "/vagrant/runtime/tmp" ]]; then
+  mkdir -p "/vagrant/runtime/tmp"
+fi
+
+
+if [[ ! -d /.vagrant-stuff ]]; then
+    mkdir /.vagrant-stuff
 
     echo;
-    echo "${VAGRANT_CORE_FOLDER}" > "/.puphpet-stuff/vagrant-core-folder.txt"
+    echo "${VAGRANT_CORE_FOLDER}" &> "/.vagrant-stuff/vagrant-core-folder.txt"
 
     cat "${VAGRANT_CORE_FOLDER}/shell/self-promotion.txt"
-    echo "Created directory /.puphpet-stuff"
+    echo "Created directory /.vagrant-stuff"
     echo "=================================="
 fi
 
@@ -24,42 +45,64 @@ echo "# Running initial-setup apt-get update and upgrade"
 echo "# =========================================="
 apt-get update 
 apt-get upgrade -y --no-install-recommends
-touch /.puphpet-stuff/initial-setup-repo-update
+
 echo "# Finished running initial-setup apt-get update"
+touch /.vagrant-stuff/ initial-setup-repo-update
 
 
 
 
-
+################################################################
+# System
+################################################################
 
 echo; 
 echo "# System install..."
 echo "# =========================================="
-echo "[0/6] Install dnsmasq exim4"
+
+echo ">> [0/6] Install dnsmasq exim4 ..."
 apt-get install -y dnsmasq exim4 
-echo "[1/6] Install git vim curl mc man make zip"
-apt-get install -y git vim curl mc man make zip
-echo "[2/6] Install apache2 libapache2-mod-macro "
+
+echo ">> [1.0/6] Install git ..."
+apt-get install -y man 
+
+echo ">> [1.3/6] Install git ..."
+apt-get install -y git 
+
+echo ">> [1.6/6] Install vim ..."
+apt-get install -y vim 
+
+echo ">> [1.9/6] Install curl mc man make zip ..."
+apt-get install -y curl mc make zip
+
+echo ">> [2/6] Install apache2 libapache2-mod-macro ..."
 apt-get install -y apache2 libapache2-mod-macro 
-echo "[3/6] Install PHP"
+
+echo ">> [3/6] Install PHP ..."
 apt-get install -y php5 php-pear php5-dev php5-mysql \
                php5-pgsql php5-sqlite php5-memcache \
                php5-gd php5-xdebug php5-curl \
                php5-mcrypt php5-cli php5-xsl 
-echo "[4/6] Install python"
+
+echo ">> [4/6] Install python ..."
 apt-get install -y python-mysqldb python-pygresql python-psycopg2 \
                python-sqlite python-redis python-memcache \
                python-pip python-imaging 
-echo "[5/6] MySQL "
+
+echo ">> [5/6] MySQL ..."
 apt-get install -y mysql-server mysql-client memcached \
                sqlite sqlite3 postgresql sphinxsearch redis-server 
-echo "[6/6] Running apt-get -y autoremove..."
-# apt-get install -y ant
+
+echo ">> [6/6] Running apt-get -y autoremove..."
 apt-get -y autoremove
+
 echo "# Finished system install"
+touch /.vagrant-stuff/  initial-setup-repo-install
 
 
-
+################################################################
+# PHP
+################################################################
 
 echo; 
 echo "# Installations from the PEAR, PECL and PyPI"
@@ -75,11 +118,10 @@ pear upgrade-all
 
 
 if [ ! -f /usr/local/bin/composer ]; then
-
     cd /usr/local/bin && curl -sS https://getcomposer.org/installer | php \
         && chmod +x composer.phar \
         && mv composer.phar /usr/local/bin/composer
-    cd "$TMP_PWD_DIR"
+    _cdhome
 fi 
 
 pip install sphinxsearch
@@ -89,43 +131,74 @@ if [[ `pecl list 2>/dev/null | grep redis` == "" ]]; then
     cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
 fi
 
+echo "# Finished PHP install"
+touch /.vagrant-stuff/ php-required-libraries
 
 
 
 
-#     
-#     
-# if [[ ! -f /.puphpet-stuff/initial-setup-repo-update ]]; then
-#     if [ "${OS}" == 'debian' ] || [ "${OS}" == 'ubuntu' ]; then
-#         echo "Running initial-setup apt-get update"
-#         apt-get update >/dev/null
-#         touch /.puphpet-stuff/initial-setup-repo-update
-#         echo "Finished running initial-setup apt-get update"
-#     elif [[ "${OS}" == 'centos' ]]; then
-#         echo "Running initial-setup yum update"
-#         yum install yum-plugin-fastestmirror -y >/dev/null
-#         yum check-update -y >/dev/null
-#         echo "Finished running initial-setup yum update"
+################################################################
+# JAVA
+################################################################
 
-#         echo "Updating to Ruby 1.9.3"
-#         yum install centos-release-SCL >/dev/null
-#         yum remove ruby >/dev/null
-#         yum install ruby193 facter hiera ruby193-ruby-irb ruby193-ruby-doc ruby193-rubygem-json ruby193-libyaml >/dev/null
-#         gem update --system >/dev/null
-#         gem install haml >/dev/null
-#         echo "Finished updating to Ruby 1.9.3"
 
-#         echo "Installing basic development tools (CentOS)"
-#         yum -y groupinstall "Development Tools" >/dev/null
-#         echo "Finished installing basic development tools (CentOS)"
-#         touch /.puphpet-stuff/initial-setup-repo-update
-#     fi
-# fi
 
-# if [[ "${OS}" == 'ubuntu' && ("${CODENAME}" == 'lucid' || "${CODENAME}" == 'precise') && ! -f /.puphpet-stuff/ubuntu-required-libraries ]]; then
-#     echo 'Installing basic curl packages (Ubuntu only)'
-#     apt-get install -y libcurl3 libcurl4-gnutls-dev curl >/dev/null
-#     echo 'Finished installing basic curl packages (Ubuntu only)'
+if [[ "$JAVA_INSTALL" != "" ]]; then
+  if [[ `java -version 2>/dev/null | grep Java` != "" ]]; then
+    JAVA_INSTALL=
+  fi
+fi
 
-#     touch /.puphpet-stuff/ubuntu-required-libraries
-# fi
+if [[ "$JAVA_INSTALL" != "" ]]; then
+  mkdir -p /usr/lib/java 
+  cd /usr/lib/java
+
+  wget -O - "$JAVA_URL" | tar -xzf -
+  update-alternatives --install /usr/bin/java java /usr/lib/java/jdk1.7.0_51/bin/java 1000
+  java -version
+
+  wget -O - "$ANT_URL" | tar -xzf -
+  update-alternatives --install /usr/bin/ant ant /usr/lib/java/apache-ant-1.9.3/bin/ant 1000
+  ant -version
+
+  _cdhome
+  touch /.vagrant-stuff/java-required-libraries
+fi
+
+unset JAVA_URL ANT_URL
+
+
+################################################################
+# YANDEX_INSTALL
+################################################################
+
+if [[ "$YANDEX_INSTALL" != "" ]]; then
+  if [[ ! -f /.vagrant-stuff/yandex-required-libraries ]]; then
+    cd /vagrant/runtime/tmp
+    wget -O yd.deb http://repo.yandex.ru/yandex-disk/yandex-disk_latest_i386.deb && \
+        dpkg --install yd.deb && \
+        rm yd.deb
+    
+    _cdhome
+    touch /.vagrant-stuff/yandex-required-libraries
+  fi
+fi
+
+
+
+################################################################
+# DROPBOX_INSTALL
+################################################################
+# Установка программы Dropbox из командной строки
+# cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -
+# ~/.dropbox-dist/dropboxd
+if [[ "$YANDEX_INSTALL" != "" ]]; then
+  if  [ -f /usr/local/bin/dropbox ]; then
+      cd /usr/local/bin
+      wget -O dropbox.py https://www.dropbox.com/download?dl=packages/dropbox.py
+      chmod +x dropbox.py
+      mv dropbox.py /usr/local/bin/dropbox
+      
+      _cdhome
+  fi
+fi
