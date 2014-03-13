@@ -66,7 +66,7 @@ def get_params():
     params = {
         "vhosts_section_id": parser.get("host_params", "vhosts_section_id"),
         "www_dir": parser.get("host_params", "www_dir"),
-        "server_ip": parser.get("guest_params", "server_ip"),
+        "server_ip": parser.get("host_params", "server_ip"),
     }
     return params
 

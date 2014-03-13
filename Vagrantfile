@@ -1,49 +1,43 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+require 'yaml'
 
-$LOAD_PATH << '.'
-require 'Params'
+dir = File.dirname(File.expand_path(__FILE__))
 
-params = Params.get
-VAGRANTFILE_API_VERSION = '2'
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+configValues = YAML.load_file("#{dir}/config.yaml")
+data = configValues['vagrantfile-local']
 
 
-  config.vm.network :private_network, ip: params[:server_ip]
 
-  config.vm.synced_folder params[:www_dir], '/var/www',
-                          create: true, 
-                          owner: 'www-data', 
-                          group: 'www-data'
-  # config.vm.synced_folder '../VirtualBoxVMs', '/VirtualBoxVMs',
-  #                         create: true, owner: 'vagrant', group: 'vagrant'
+Vagrant.configure("2") do |config|
+  config.vm.box     = "#{data['vm']['box']}"
+  config.vm.box_url = "#{data['vm']['box_url']}"
 
-  config.vm.provider :virtualbox do |vb, override|
+  config.vm.network "private_network", ip:  "#{data['vm']['server_ip']}"
+
+
+  data['vm']['synced_folder'].each do |i, folder|
+    if folder[:source] != '' && folder[:target] != '' && folder[:id] != ''
+      nfs    = (folder['nfs'] == "true") ? "nfs" : nil
+      create = (folder['create'] == "true") ? true : false
+      owner  = (folder['owner'] != '') ? folder['owner'] : "root"
+      group  = (folder['group'] != '') ? folder['owner'] : "root"
+      config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{folder['id']}",
+                              type: nfs, create: create,
+                              owner: owner, group: group
+    end
+  end
+
+  config.vm.provider :virtualbox do |vb|
     vb.gui = false
-    vb.customize ['modifyvm', :id, '--memory', params[:memory]]
-    override.vm.box = params[:box]
-    override.vm.box_url = params[:box_url]
+    vb.customize ['modifyvm', :id, '--memory', "#{data['vm']['memory']}"]
   end
 
-  # Drop the memory requirement to 256 for now.
-  # config.vm.provider :web do |web, override|
-  #   web.customize ["modifyvm", :id, "--memory", "512"]
-  #   override.vm.box = params[:box]
-  #   override.vm.box_url = params[:box_url]
-  # end
-
-  # Provision i-MSCP
-  config.vm.provision 'shell' do |s|
-    s.path = Params::PROVISION_DIR + '/configure.sh'
-    s.args = Params.build_args
+  data['vm']['provision'].each do |i, provision|   
+    args = provision['args'].join(' ')
+    type  = (provision['type'] != '') ? provision['type'] : "shell"
+    config.vm.provision "#{type}" do |s|
+      s.path = "#{provision['path']}"
+      s.args = "#{args}"
+    end
   end
-  
-  # config.vm.provision "shell", path: "docs/vagrant/scripts/aptupdate.sh"
-  # config.vm.provision "shell", path: "docs/vagrant/scripts/setlang.sh"
-  # config.vm.provision "shell", path: "docs/vagrant/scripts/installreqs.sh"
-  # config.vm.provision "shell", path: "docs/vagrant/scripts/createpreseed.sh"
-  # config.vm.provision "shell", path: "docs/vagrant/scripts/install.sh"
-  
 end
 
