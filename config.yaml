@@ -1,21 +1,22 @@
 ---
 vagrantfile-local:
     vm:
-        box: VagrantWebdev
-        box_url: 'http://static.fresh-team.ru/vagrant/debian-wheezy-i386.box'
+        box: fobia-debian-wheezy
+        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/virtualbox.box'
+        # vagrant init phalconbox https://s3-eu-west-1.amazonaws.com/phalcon/phalcon125-apache2-php54-mysql55.box
         server_ip: 192.168.2.10
         memory: 1024
         provision:
-            p1:
-                type: shell
-                path: provision/shell/initial-setup.sh
+            # p1:
+            #     type: shell
+            #     path: provision/shell/initial-setup.sh
             p2:
                 path: provision/shell/configure.sh
             # p3:
-            #     type: shell
-            #     path: provision/shell/runtime.sh
-            #     args:
-            #         - val1
+                # type: shell
+                # path: provision/shell/runtime.sh
+                # args:
+                    # - val1
             #         - o pt1
         synced_folder:
             s1:
@@ -27,6 +28,18 @@ vagrantfile-local:
                 owner: 'www-data'
                 group: 'www-data'
 
+    ssh:
+        host: null
+        port: null
+        # private_key_path: provision/data/insecure_private_key
+        username: null
+        guest_port: null
+        keep_alive: true
+        forward_agent: true
+        forward_x11: true
+        shell: 'bash -l'
+    vagrant:
+        host: detect
 # ; SMTP server to send emails
 # ; if you change this option, you need to execute vagrant provision
 mailcatcher:

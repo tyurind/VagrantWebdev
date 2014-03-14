@@ -13,16 +13,17 @@ Vagrant.configure("2") do |config|
 
   config.vm.network "private_network", ip:  "#{data['vm']['server_ip']}"
 
-
+  config.vm.synced_folder "#{dir}", "/vagrant"
   data['vm']['synced_folder'].each do |i, folder|
-    if folder[:source] != '' && folder[:target] != '' && folder[:id] != ''
+    if folder['source'] != '' && folder['target'] != '' && folder['id'] != ''
       nfs    = (folder['nfs'] == "true") ? "nfs" : nil
       create = (folder['create'] == "true") ? true : false
       owner  = (folder['owner'] != '') ? folder['owner'] : "root"
       group  = (folder['group'] != '') ? folder['owner'] : "root"
-      config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{folder['id']}",
-                              type: nfs, create: create,
-                              owner: owner, group: group
+      config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", 
+                              create: create,
+                              owner: owner, 
+                              group: group
     end
   end
 
@@ -42,8 +43,38 @@ Vagrant.configure("2") do |config|
     else
       config.vm.provision :shell, :path => "#{provision['path']}"
     end
-
-
   end
+
+
+  # if !data['ssh']['host'].nil?
+  #   config.ssh.host = "#{data['ssh']['host']}"
+  # end
+  # if !data['ssh']['port'].nil?
+  #   config.ssh.port = "#{data['ssh']['port']}"
+  # end
+  # if !data['ssh']['private_key_path'].nil?
+  #   config.ssh.private_key_path = "#{data['ssh']['private_key_path']}"
+  # end
+  # if !data['ssh']['username'].nil?
+  #   config.ssh.username = "#{data['ssh']['username']}"
+  # end
+  # if !data['ssh']['guest_port'].nil?
+  #   config.ssh.guest_port = data['ssh']['guest_port']
+  # end
+  # if !data['ssh']['shell'].nil?
+  #   config.ssh.shell = "#{data['ssh']['shell']}"
+  # end
+  # if !data['ssh']['keep_alive'].nil?
+  #   config.ssh.keep_alive = data['ssh']['keep_alive']
+  # end
+  # if !data['ssh']['forward_agent'].nil?
+  #   config.ssh.forward_agent = data['ssh']['forward_agent']
+  # end
+  # if !data['ssh']['forward_x11'].nil?
+  #   config.ssh.forward_x11 = data['ssh']['forward_x11']
+  # end
+  # if !data['vagrant']['host'].nil?
+  #   config.vagrant.host = data['vagrant']['host'].gsub(":", "").intern
+  # end
 end
 

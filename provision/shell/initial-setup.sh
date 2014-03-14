@@ -24,13 +24,13 @@ _cdruntime()
   cd "/vagrant/runtime"
 }
 
-apt-install()
-{
-  for i in $@ do
-    echo "Running initial-setup apt-get: $i"
-    apt-get install -y "$1" >/dev/null
-  done
-}
+# apt-install()
+# {
+#   for i in $@ do
+#     echo "Running initial-setup apt-get: $i"
+#     apt-get install -y "$1" >/dev/null
+#   done
+# }
 
 
 
@@ -57,7 +57,7 @@ apt-get update
 apt-get upgrade -y --no-install-recommends
 
 echo "# Finished running initial-setup apt-get update"
-touch /.vagrant-stuff/ initial-setup-repo-update
+touch /.vagrant-stuff/initial-setup-repo-update
 
 
 
@@ -80,6 +80,7 @@ apt-get install -y man
 
 echo "$LN [1.3/6] Install git ..."
 apt-get install -y git 
+apt-get install -y git-sh 
 
 echo "$LN [1.6/6] Install vim ..."
 apt-get install -y vim 
@@ -109,7 +110,7 @@ echo "$LN [6/6] Running apt-get -y autoremove..."
 apt-get -y autoremove
 
 echo "# Finished system install"
-touch /.vagrant-stuff/  initial-setup-repo-install
+touch /.vagrant-stuff/initial-setup-repo-install
 
 
 ################################################################
@@ -144,7 +145,7 @@ if [[ `pecl list 2>/dev/null | grep redis` == "" ]]; then
 fi
 
 echo "# Finished PHP install"
-touch /.vagrant-stuff/ php-required-libraries
+touch /.vagrant-stuff/php-required-libraries
 
 
 
