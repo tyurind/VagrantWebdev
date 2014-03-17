@@ -2,6 +2,7 @@
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/
     SetEnv DEBUG_SERVER 1
+    SetEnv DEBUG_DIR /var/log
 
     <Directory />
         Options FollowSymLinks
@@ -37,6 +38,7 @@
         ServerAlias www.$domain
         DocumentRoot $dir
         SetEnv DEBUG_SERVER 1
+        SetEnv DEBUG_DIR /var/log
 
         <Directory />
             Options FollowSymLinks

@@ -2,7 +2,7 @@
 vagrantfile-local:
     vm:
         box: fobia-debian-wheezy
-        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/virtualbox.box'
+        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/webserver.box'
         # vagrant init phalconbox https://s3-eu-west-1.amazonaws.com/phalcon/phalcon125-apache2-php54-mysql55.box
         server_ip: 192.168.2.10
         memory: 1024
