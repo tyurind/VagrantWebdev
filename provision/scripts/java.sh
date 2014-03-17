@@ -5,13 +5,19 @@ JAVA_URL_86="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-
 JAVA_URL_64="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-linux-x64.gz"
 ANT_URL="http://apache-mirror.rbc.ru/pub/apache//ant/binaries/apache-ant-1.9.3-bin.tar.gz"
 
-if [ "$(uname -m 2>/dev/null | grep 64)" != "" ]; then
-    JAVA_URL="$JAVA_URL_64"
-    echo ">>> JAVA x64"
-else
-    JAVA_URL="$JAVA_URL_86"
-    echo ">>> JAVA x86"
-fi
+
+
+echo;
+echo "# Running initial-setup JAVA and ANT"
+    if [ "$(uname -m 2>/dev/null | grep 64)" != "" ]; then
+        JAVA_URL="$JAVA_URL_64"
+        echo ">>> JAVA x64"
+    else
+        JAVA_URL="$JAVA_URL_86"
+        echo ">>> JAVA x86"
+    fi
+echo "# =========================================="
+
 
 
 mkdir -p /usr/lib/java 
@@ -22,6 +28,9 @@ if [ "$(java -version 2>&1 | grep 'java version')" = "" ]; then
     update-alternatives --install /usr/bin/java java /usr/lib/java/jdk1.7.0_51/bin/java 1000
     java -version
 fi
+
+echo;
+echo ">>> ANT"
 
 if [ "$(ant -version 2>&1 | grep 'version')" = "" ]; then
     wget --no-check-certificate -O - "$ANT_URL" | tar -xzf -
