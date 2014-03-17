@@ -166,11 +166,11 @@ if [[ "$JAVA_INSTALL" != "" ]]; then
   mkdir -p /usr/lib/java 
   cd /usr/lib/java
 
-  wget -O - "$JAVA_URL" | tar -xzf -
+  wget --no-check-certificate -O - "$JAVA_URL" | tar -xzf -
   update-alternatives --install /usr/bin/java java /usr/lib/java/jdk1.7.0_51/bin/java 1000
   java -version
 
-  wget -O - "$ANT_URL" | tar -xzf -
+  wget --no-check-certificate -O - "$ANT_URL" | tar -xzf -
   update-alternatives --install /usr/bin/ant ant /usr/lib/java/apache-ant-1.9.3/bin/ant 1000
   ant -version
 
