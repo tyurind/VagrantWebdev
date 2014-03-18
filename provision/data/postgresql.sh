@@ -8,6 +8,6 @@ sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgre
 echo "postgres:password" | /usr/sbin/chpasswd
 cp /vagrant/provision/data/postgres/pg_hba.conf /etc/postgresql/9.1/main/
 
-echo "localhost:5432:postgres:postgres:password" > /home/vagrant
+echo "localhost:5432:postgres:postgres:password" > /home/vagrant/.pgpass
 chmod 600 /home/vagrant/.pgpass
 

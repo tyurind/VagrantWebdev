@@ -18,7 +18,9 @@ service exim4 stop         2>/dev/null
 
 
 
-
+for i in $@; do
+    .  "/vagrant/provision/data/$i.sh"
+done
 
 
 #
