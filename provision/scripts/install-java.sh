@@ -1,4 +1,5 @@
-# bash
+#!/bin/bash
+set -e
 
 
 JAVA_URL_86="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-linux-i586.gz"
@@ -9,6 +10,8 @@ ANT_URL="http://apache-mirror.rbc.ru/pub/apache//ant/binaries/apache-ant-1.9.3-b
 
 echo;
 echo "# Running initial-setup JAVA and ANT"
+echo "# =========================================="
+
     if [ "$(uname -m 2>/dev/null | grep 64)" != "" ]; then
         JAVA_URL="$JAVA_URL_64"
         echo ">>> JAVA x64"
@@ -16,7 +19,6 @@ echo "# Running initial-setup JAVA and ANT"
         JAVA_URL="$JAVA_URL_86"
         echo ">>> JAVA x86"
     fi
-echo "# =========================================="
 
 
 
@@ -38,4 +40,3 @@ if [ "$(ant -version 2>&1 | grep 'version')" = "" ]; then
     ant -version
 fi
 
-unset JAVA_URL_86 JAVA_URL_64 JAVA_URL ANT_URL

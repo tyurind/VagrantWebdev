@@ -46,6 +46,11 @@ Vagrant.configure("2") do |config|
   end
 
 
+  config.vm.provision :shell, :path => "#{dir}/provision/service-stop.sh"
+  
+  config.vm.provision :shell, :path => "#{dir}/provision/service-start.sh"
+
+
   # if !data['ssh']['host'].nil?
   #   config.ssh.host = "#{data['ssh']['host']}"
   # end
