@@ -10,9 +10,11 @@ echo ">>>>"
 #
 # Install goods
 #
-echo; 
+echo; echo; 
 echo "# System update..."
 echo "# =========================================="
+echo;
+
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
@@ -22,9 +24,10 @@ apt-get install -y python-software-properties
 
 # deb http://http.debian.net/debian stable main
 
-echo; 
-echo "# System install..."
-echo "# =========================================="
+echo; echo;
+echo  "# System install..."
+echo  "# ==========================================" 
+echo;
 
 
 apt-get install -y bash-completion whois
@@ -44,6 +47,6 @@ apt-get install -y mysql-server mysql-client sqlite sqlite3
 
 apt-get install -y memcached sphinxsearch redis-server 
 
-apt-get install -y postgresql sphinxsearch  
+apt-get install -y postgresql   
 
 apt-get -y autoremove

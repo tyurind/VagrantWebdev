@@ -8,9 +8,10 @@ ANT_URL="http://apache-mirror.rbc.ru/pub/apache//ant/binaries/apache-ant-1.9.3-b
 
 
 
-echo;
+echo; echo;
 echo "# Running initial-setup JAVA and ANT"
 echo "# =========================================="
+echo;
 
     if [ "$(uname -m 2>/dev/null | grep 64)" != "" ]; then
         JAVA_URL="$JAVA_URL_64"

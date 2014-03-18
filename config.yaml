@@ -2,21 +2,32 @@
 vagrantfile-local:
     vm:
         box: fobia-debian-wheezy
-        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/webserver.box'
+        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/virtualbox.box'
         # vagrant init phalconbox https://s3-eu-west-1.amazonaws.com/phalcon/phalcon125-apache2-php54-mysql55.box
         server_ip: 192.168.2.10
         memory: 1024
         provision:
-            # p1:
-            #     type: shell
-            #     path: provision/shell/initial-setup.sh
+            p1:
+                type: shell
+                path: provision/scripts/install.sh
             p2:
-                path: provision/shell/configure.sh
-            # p3:
-                # type: shell
-                # path: provision/shell/runtime.sh
-                # args:
-                    # - val1
+                type: shell
+                path: provision/scripts/install-pear.sh
+            p3:
+                type: shell
+                path: provision/scripts/install-php-dev-tools.sh
+            p4:
+                type: shell
+                path: provision/scripts/install-java.sh
+            p5:
+                type: shell
+                path: provision/scripts/install-nodejs.sh
+            p6:
+                type: shell
+                path: provision/data/configure.sh
+                args:
+                    - apache2 dnsmasq memcached mysql php postgresql redis sphinx
+                    - vim
             #         - o pt1
         synced_folder:
             s1:

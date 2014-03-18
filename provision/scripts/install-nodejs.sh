@@ -7,9 +7,11 @@ NODE_URL_86="http://nodejs.org/dist/v0.10.26/node-v0.10.26-linux-x86.tar.gz"
 NODE_URL_64="http://nodejs.org/dist/v0.10.26/node-v0.10.26-linux-x64.tar.gz"
 
 
-echo;
+echo; echo;
 echo "# Running initial-setup NODEJS"
 echo "# =========================================="
+echo;
+
 
     if [ "$(uname -m 2>/dev/null | grep 64)" != "" ]; then
         NODE_URL="$NODE_URL_64"

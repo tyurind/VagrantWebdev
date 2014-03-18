@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-echo; 
+echo; echo;
 echo "# Installations PHP Dev Tools"
 echo "# =========================================="
+echo;
+
 
 cd /usr/local/bin
 
