@@ -16,17 +16,17 @@ vagrantfile-local:
             p3:
                 type: shell
                 path: provision/scripts/install-php-dev-tools.sh
-            p4:
-                type: shell
-                path: provision/scripts/install-java.sh
-            p5:
-                type: shell
-                path: provision/scripts/install-nodejs.sh
+            # p4:
+            #     type: shell
+            #     path: provision/scripts/install-java.sh
+            # p5:
+            #     type: shell
+            #     path: provision/scripts/install-nodejs.sh
             p6:
                 type: shell
                 path: provision/data/configure.sh
                 args:
-                    - apache2 dnsmasq memcached mysql php postgresql redis sphinx
+                    - apache2 dnsmasq mysql php 
                     - vim
             #         - o pt1
         synced_folder:

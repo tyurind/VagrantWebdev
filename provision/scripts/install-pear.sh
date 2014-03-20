@@ -25,6 +25,14 @@ pear install --alldeps pear.netpirates.net/autoload
 #     cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
 # fi
 
+
 pear cc
 pear update-channels
 pear upgrade-all
+pear cc
+
+
+if [ ! -d /usr/share/php/Smarty ]; then
+    wget --no-check-certificate -O - https://github.com/faclib/Smarty/archive/v3.1.16.tar.gz | tar -xzf -
+    mv Smarty*/libs /usr/share/php/Smarty && rm -rf Smarty*
+fi
