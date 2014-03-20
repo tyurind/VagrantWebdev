@@ -9,27 +9,27 @@ echo;
 
 
 apt-get install -y php-pear 
-# python-pip
-                    
+
 pear config-set auto_discover 1
-pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHPUnit_SkeletonGenerator
+pear install pear.phpunit.de/phpunit phpunit/dbunit phpunit/phpunit_skeletongenerator
 pear install components.ez.no/base ezc/database ezc/consoletools
-pear install pear/console_commandline pear/PHP_CodeSniffer
-pear install pear.twig-project.org/twig
+pear install pear/console_commandline pear/php_codesniffer
+pear install  --ignore-errors pear.twig-project.org/twig 2>/dev/null
 pear install --alldeps pear.netpirates.net/autoload
 
-# pip install sphinxsearch
+## apt-get install -y python-pip
+## pip install sphinxsearch
 
-# if [[ `pecl list 2>/dev/null | grep redis` == "" ]]; then
-#     pecl install redis
-#     cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
-# fi
+## if [[ `pecl list 2>/dev/null | grep redis` == "" ]]; then
+##     pecl install redis
+##     cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
+## fi
 
 
-pear cc
+pear cc 2>/dev/null
 pear update-channels
 pear upgrade-all
-pear cc
+pear cc 2>/dev/null
 
 
 if [ ! -d /usr/share/php/Smarty ]; then

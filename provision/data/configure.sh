@@ -3,7 +3,7 @@ set -e
 
 #
 # Configure
-#
+echo;
 echo "# " 
 echo "# Configure STOP services "
 echo "# =========================================="
@@ -38,7 +38,7 @@ service exim4 start
 #
 # After configuring
 #
-/usr/bin/indexer --rotate --all --config /etc/sphinxsearch/sphinx.conf
+/usr/bin/indexer --rotate --all --config /etc/sphinxsearch/sphinx.conf 2>/dev/null 
 
 
 echo ">>>> END"
