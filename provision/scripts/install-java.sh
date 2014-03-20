@@ -4,10 +4,11 @@ set -e
 
 JAVA_URL_86="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-linux-i586.gz"
 JAVA_URL_64="https://googledrive.com/host/0B-rZL_vXzmg8SHY4Yno2VEhQamc/jdk-7u51-linux-x64.gz"
-ANT_URL="http://apache-mirror.rbc.ru/pub/apache//ant/binaries/apache-ant-1.9.3-bin.tar.gz"
+ANT_URL="http://apache-mirror.rbc.ru/pub/apache/ant/binaries/apache-ant-1.9.3-bin.tar.gz"
 
 
-
+# wget repository.jelasticloud.com/scripts/jvm/7u51/jdk7u51 && chmod +x jdk7u51 && ./jdk7u51 && rm -rf jdk7u51
+# 
 echo; echo;
 echo "# Running initial-setup JAVA and ANT"
 echo "# =========================================="

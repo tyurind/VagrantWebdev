@@ -2,7 +2,7 @@
 vagrantfile-local:
     vm:
         box: fobia-debian-wheezy
-        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/virtualbox.box'
+        box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/webserver.box'
         # vagrant init phalconbox https://s3-eu-west-1.amazonaws.com/phalcon/phalcon125-apache2-php54-mysql55.box
         server_ip: 192.168.2.10
         memory: 1024
@@ -16,18 +16,18 @@ vagrantfile-local:
             p3:
                 type: shell
                 path: provision/scripts/install-php-dev-tools.sh
-            p4:
-                type: shell
-                path: provision/scripts/install-java.sh
-            p5:
-                type: shell
-                path: provision/scripts/install-nodejs.sh
+            # p4:
+            #     type: shell
+            #     path: provision/scripts/install-java.sh
+            # p5:
+            #     type: shell
+            #     path: provision/scripts/install-nodejs.sh
             p6:
                 type: shell
                 path: provision/data/configure.sh
                 args:
-                    - apache2 dnsmasq memcached mysql php postgresql redis sphinx
-                    - vim
+                    - apache2 dnsmasq mysql php vim
+                    - memcached  postgresql redis sphinx
             #         - o pt1
         synced_folder:
             s1:
@@ -38,7 +38,12 @@ vagrantfile-local:
                 create: 'true'
                 owner: 'www-data'
                 group: 'www-data'
-
+            s2:
+                id: php-share
+                source: 'z:/usr/local/pear/php/Smarty'
+                target: /usr/share/php/Smarty
+                nfs: 'false'
+                create: 'true'
     ssh:
         host: null
         port: null
