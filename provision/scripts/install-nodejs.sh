@@ -27,8 +27,8 @@ cd /usr/local/lib
 
 if [ "$(node -v 2>/dev/null | grep 'v0')" = "" ]; then
     wget --no-check-certificate -O - "$NODE_URL" | tar -xzf -
-    ln -s /usr/local/lib/node*/bin/node ~/bin/node
-    ln -s /usr/local/lib/node*/bin/npm ~/bin/npm
+    ln -s /usr/local/lib/node*/bin/node /usr/local/bin/node
+    ln -s /usr/local/lib/node*/bin/npm /usr/local/bin/npm
 
     npm install -g less
 fi

@@ -1,21 +1,22 @@
 ---
 vagrantfile-local:
     vm:
-        box: fobia-debian-wheezy
+        box: webserver
         box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/webserver.box'
+        # box_url: 'https://vagrantcloud.com/fobia/debian-wheezy/version/1/provider/webserver.box'
         # vagrant init phalconbox https://s3-eu-west-1.amazonaws.com/phalcon/phalcon125-apache2-php54-mysql55.box
         server_ip: 192.168.2.10
         memory: 1024
         provision:
-            p1:
-                type: shell
-                path: provision/scripts/install.sh
-            p2:
-                type: shell
-                path: provision/scripts/install-pear.sh
-            p3:
-                type: shell
-                path: provision/scripts/install-php-dev-tools.sh
+            # p1:
+            #     type: shell
+            #     path: provision/scripts/install.sh
+            # p2:
+            #     type: shell
+            #     path: provision/scripts/install-pear.sh
+            # p3:
+            #     type: shell
+            #     path: provision/scripts/install-php-dev-tools.sh
             # p4:
             #     type: shell
             #     path: provision/scripts/install-java.sh
@@ -26,8 +27,8 @@ vagrantfile-local:
                 type: shell
                 path: provision/data/configure.sh
                 args:
-                    - apache2 dnsmasq mysql php vim
-                    - memcached  postgresql redis sphinx
+                    - apache2 dnsmasq mysql php 
+                    - vim
             #         - o pt1
         synced_folder:
             s1:
@@ -47,13 +48,13 @@ vagrantfile-local:
     ssh:
         host: null
         port: null
-        # private_key_path: provision/data/insecure_private_key
+        private_key_path: provision/data/insecure_private_key
         username: null
         guest_port: null
-        keep_alive: true
-        forward_agent: true
-        forward_x11: true
-        shell: 'bash -l'
+        keep_alive: false
+        forward_agent: false
+        forward_x11: false
+        shell: null
     vagrant:
         host: detect
 # ; SMTP server to send emails

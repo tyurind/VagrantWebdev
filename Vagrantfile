@@ -31,6 +31,11 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.customize ['modifyvm', :id, '--memory', "#{data['vm']['memory']}"]
   end
+  
+  # config.vm.provider :webserver do |vb|
+  #   vb.gui = false
+  #   vb.customize ['modifyvm', :id, '--memory', "#{data['vm']['memory']}"]
+  # end
 
   data['vm']['provision'].each do |i, provision|   
     type  = (provision['type'] != '') ? provision['type'] : "shell"
@@ -51,35 +56,35 @@ Vagrant.configure("2") do |config|
 #  config.vm.provision :shell, :path => "#{dir}/provision/service-start.sh"
 
 
-  # if !data['ssh']['host'].nil?
-  #   config.ssh.host = "#{data['ssh']['host']}"
-  # end
-  # if !data['ssh']['port'].nil?
-  #   config.ssh.port = "#{data['ssh']['port']}"
-  # end
-  # if !data['ssh']['private_key_path'].nil?
-  #   config.ssh.private_key_path = "#{data['ssh']['private_key_path']}"
-  # end
-  # if !data['ssh']['username'].nil?
-  #   config.ssh.username = "#{data['ssh']['username']}"
-  # end
-  # if !data['ssh']['guest_port'].nil?
-  #   config.ssh.guest_port = data['ssh']['guest_port']
-  # end
-  # if !data['ssh']['shell'].nil?
-  #   config.ssh.shell = "#{data['ssh']['shell']}"
-  # end
-  # if !data['ssh']['keep_alive'].nil?
-  #   config.ssh.keep_alive = data['ssh']['keep_alive']
-  # end
-  # if !data['ssh']['forward_agent'].nil?
-  #   config.ssh.forward_agent = data['ssh']['forward_agent']
-  # end
-  # if !data['ssh']['forward_x11'].nil?
-  #   config.ssh.forward_x11 = data['ssh']['forward_x11']
-  # end
-  # if !data['vagrant']['host'].nil?
-  #   config.vagrant.host = data['vagrant']['host'].gsub(":", "").intern
-  # end
+  if !data['ssh']['host'].nil?
+    config.ssh.host = "#{data['ssh']['host']}"
+  end
+  if !data['ssh']['port'].nil?
+    config.ssh.port = "#{data['ssh']['port']}"
+  end
+  if !data['ssh']['private_key_path'].nil?
+    config.ssh.private_key_path = "#{data['ssh']['private_key_path']}"
+  end
+  if !data['ssh']['username'].nil?
+    config.ssh.username = "#{data['ssh']['username']}"
+  end
+  if !data['ssh']['guest_port'].nil?
+    config.ssh.guest_port = data['ssh']['guest_port']
+  end
+  if !data['ssh']['shell'].nil?
+    config.ssh.shell = "#{data['ssh']['shell']}"
+  end
+  if !data['ssh']['keep_alive'].nil?
+    config.ssh.keep_alive = data['ssh']['keep_alive']
+  end
+  if !data['ssh']['forward_agent'].nil?
+    config.ssh.forward_agent = data['ssh']['forward_agent']
+  end
+  if !data['ssh']['forward_x11'].nil?
+    config.ssh.forward_x11 = data['ssh']['forward_x11']
+  end
+  if !data['vagrant']['host'].nil?
+    config.vagrant.host = data['vagrant']['host'].gsub(":", "").intern
+  end
 end
 
