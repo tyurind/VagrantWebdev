@@ -14,13 +14,15 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip:  "#{data['vm']['server_ip']}"
 
   config.vm.synced_folder "#{dir}", "/vagrant"
+
   data['vm']['synced_folder'].each do |i, folder|
     if folder['source'] != '' && folder['target'] != '' && folder['id'] != ''
       nfs    = (folder['nfs'] == "true") ? "nfs" : nil
       create = (folder['create'] == "true") ? true : false
       owner  = (folder['owner'] != '') ? folder['owner'] : "root"
       group  = (folder['group'] != '') ? folder['owner'] : "root"
-      config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", 
+      config.vm.synced_folder "#{folder['source']}", 
+                              "#{folder['target']}", 
                               create: create,
                               owner: owner, 
                               group: group
