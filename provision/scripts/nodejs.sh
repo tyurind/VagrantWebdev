@@ -20,7 +20,7 @@ mkdir -p /usr/local/lib
 cd /usr/local/lib
 
 if [ "$(node -v 2>/dev/null | grep 'v0')" = "" ]; then
-    wget --no-check-certificate -O - "$NODE_URL" | tar -xzf -
+    wget --no-check-certificate -q -O - "$NODE_URL" | tar -xzf -
     ln -s /usr/local/lib/node*/bin/node /usr/local/bin/node
     ln -s /usr/local/lib/node*/bin/npm /usr/local/bin/npm
 

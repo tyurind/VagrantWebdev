@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # your network.
   # config.vm.network "public_network"
   
-  # config.vm.provision :shell, :path => "provision/scripts/install.sh"
+  config.vm.provision :shell, :path => "provision/scripts/full-install.sh"
 
 
   # If true, then any SSH connections made will enable agent forwarding.
