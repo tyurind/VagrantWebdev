@@ -2,6 +2,8 @@
 
 echo ">>> Installing Apache Server"
 
+DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
+
 # [[ -z "$1" ]] && { echo "!!! IP address not set. Check the Vagrant file."; exit 1; }
 
 # Add repo for latest FULL stable Apache
@@ -20,94 +22,7 @@ echo ">>> Configuring Apache"
 # cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 # /vagrant/bin/internal/update-apache-vhosts
 
-cat > /etc/apache2/sites-available/default <<EOF
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/
-    SetEnv DEBUG_SERVER 1
-
-    <Directory />
-        Options FollowSymLinks
-        AllowOverride None
-    </Directory>
-
-    <Directory /var/www>
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride All
-        Order allow,deny
-        allow from all
-    </Directory>
-
-    ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-    <Directory "/usr/lib/cgi-bin">
-        AllowOverride None
-        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-        Order allow,deny
-        Allow from all
-    </Directory>
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-
-    # Possible values include: debug, info, notice, warn, error, crit,
-    # alert, emerg.
-    LogLevel warn
-</VirtualHost>
-
-<Macro VHost $domain $dir>
-    <VirtualHost *:80>
-        ServerAdmin webmaster@localhost
-        ServerName $domain
-        ServerAlias www.$domain
-        DocumentRoot $dir/html
-        SetEnv DEBUG_SERVER 1
-
-        <Directory />
-            Options FollowSymLinks
-            AllowOverride None
-        </Directory>
-
-        <Directory $dir/html>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride All
-            Order allow,deny
-            allow from all
-        </Directory>
-
-        ScriptAlias /cgi-bin/ $dir/cgi-bin/
-        <Directory "$dir/cgi-bin">
-            AllowOverride None
-            Options +ExecCGI +MultiViews +SymLinksIfOwnerMatch
-            Order allow,deny
-            Allow from all
-        </Directory>
-
-        <IfModule php5_module>
-            php_value memory_limit 128M
-            php_value max_execution_time 150
-            php_value request_order GP
-            # php_value date.timezone Europe/Moscow
-            # php_value error_log /var/www/callcentre/logs/php_errors.log
-        </IfModule>
-
-        # ErrorLog ${APACHE_LOG_DIR}/error-$domain.log
-        ErrorLog  $dir/logs/error.log
-        CustomLog $dir/logs/access.log common
-
-        # Possible values include: debug, info, notice, warn, error, crit,
-        # alert, emerg.
-        LogLevel warn
-
-        Include $dir/*.host.conf
-    </VirtualHost>
-</Macro>
-#
-# Vhosts begin
-#
-
-#
-# Vhosts end
-#
-EOF
+cat ${DIR}/apache-config.conf > /etc/apache2/sites-available/default 
 
 mkdir -p /usr/share/htdocs/
 

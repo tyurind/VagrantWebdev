@@ -5,28 +5,46 @@ import re
 import webbrowser
 import sys
 import tempfile
-from ConfigParser import ConfigParser
+# from ConfigParser import ConfigParser
 
 
 eol = os.linesep
-if hasattr(sys, "frozen") and sys.frozen in ("windows_exe", "console_exe"):
-    current_dir = os.path.dirname(sys.executable)
-else:
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-params_paths = (
-    os.path.abspath(current_dir + "/params.ini"),
-    os.path.abspath(current_dir + "/../../params.ini"),
-)
+
+# if hasattr(sys, "frozen") and sys.frozen in ("windows_exe", "console_exe"):
+#     current_dir = os.path.dirname(sys.executable)
+# else:
+#     current_dir = os.path.dirname(os.path.realpath(__file__))
+# params_paths = (
+#     os.path.abspath(current_dir + "/params.ini"),
+#     os.path.abspath(current_dir + "/../../params.ini"),
+# )
+
+
+params_default = {
+    "vhosts_section_id": "Vagrant hosts",
+    "www_dir": "Z:\srv",
+    "www": "/var/www",
+    "server_ip": "192.168.33.10",
+}
+
 
 
 def main():
-    hosts_path = check_files()
     params = get_params()
-    hosts = get_virtual_hosts_names(params)
+    hosts_path = check_files()
+
+    # print "hosts_path: {0} {1}".format(hosts_path, server_ip)
+    # print "params: {0} {1} {2}".format(params["vhosts_section_id"], params["www_dir"], params["server_ip"])
+    
+    # hosts = get_virtual_hosts_names(params)
+    hosts = get_virtual_hosts_remote_names(params)
     hosts_content = get_hosts_file_content(hosts_path, hosts, params)
+
+    print "hosts: {0}".format(hosts)
 
     try:
         open(hosts_path, "w").write(hosts_content)
+        os.system("ssh vagrant sudo update-apache-vhosts")
     except IOError as e:
         fd, tmp_file_path = tempfile.mkstemp(".txt")
         os.close(fd)
@@ -53,30 +71,31 @@ def check_files():
 
 
 def get_params():
-    params_path = None
-    for params_path in params_paths:
-        if os.path.exists(params_path):
-            break
-    if not (params_path and os.access(params_path, os.R_OK)):
-        raise RuntimeError("Error while access params file")
+    params = params_default
+    os.system("vagrant ssh -c 'echo \$SSH_CONNECTION | cut -d\' \' -f3' > tmp.txt")
+    params["server_ip"] = open('tmp.txt', "r").read().strip()
+    os.system("rm tmp.txt")
 
-    parser = ConfigParser()
-    parser.read(params_path)
-
-    params = {
-        "vhosts_section_id": parser.get("host_params", "vhosts_section_id"),
-        "www_dir": parser.get("host_params", "www_dir"),
-        "server_ip": parser.get("guest_params", "server_ip"),
-    }
     return params
 
 
 def get_virtual_hosts_names(params):
     hosts = []
     www_dir = os.path.expanduser(params["www_dir"])
+
     for name in os.listdir(www_dir):
         if os.path.isdir(os.path.join(www_dir, name)):
             hosts.append(name)
+    return hosts
+
+
+def get_virtual_hosts_remote_names(params):
+    hosts = []
+    os.system("ssh vagrant ls /var/www > tmp.txt")
+    hosts_string = open('tmp.txt', "r").read()
+    os.system("rm tmp.txt")
+    hosts = hosts_string.splitlines()
+
     return hosts
 
 
