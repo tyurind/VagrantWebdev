@@ -72,8 +72,9 @@ def check_files():
 
 def get_params():
     params = params_default
-    os.system("vagrant ssh -c 'echo \$SSH_CONNECTION | cut -d\' \' -f3' > tmp.txt")
+    os.system("vagrant ssh -c '/usr/local/sbin/sshc' > tmp.txt")
     params["server_ip"] = open('tmp.txt', "r").read().strip()
+    print "Ip: {0} {1}" .format(params["server_ip"],  eol)
     os.system("rm tmp.txt")
 
     return params
