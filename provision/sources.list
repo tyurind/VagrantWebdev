@@ -1,0 +1,13 @@
+deb http://ftp.it.debian.org/debian wheezy main contrib non-free
+deb http://security.debian.org wheezy/updates main contrib non-free
+
+
+
+## /etc/apt/sources.list.d/grml.list
+# grml: stable repository:
+  deb     http://deb.grml.org/ grml-stable  main
+  deb-src http://deb.grml.org/ grml-stable  main
+
+# grml: testing/development repository:
+  deb     http://deb.grml.org/ grml-testing main
+  deb-src http://deb.grml.org/ grml-testing main
