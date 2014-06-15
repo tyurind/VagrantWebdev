@@ -6,6 +6,7 @@ mkdir -p /usr/share/htdocs
 apt-get install -y zip
 
 cd /usr/share/htdocs
+echo ">>> ==> download (... phpmyadmin)"
 wget --no-check-certificate http://github.com/fobia/srv-tools-phpmyadmin/archive/master.zip
 unzip master.zip
 
