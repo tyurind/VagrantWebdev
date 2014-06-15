@@ -14,3 +14,8 @@ cd /vagrant/provision/scripts
 ./php.sh
 ./phpmyadmin.sh
 ./vim.sh
+
+echo ">>> System clean cache"
+apt-get -y autoremove
+apt-get -y autoclean
+apt-get -y clean
