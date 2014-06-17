@@ -1,11 +1,19 @@
 #!/bin/bash
 set -e
 
+
+
+echo ">>> Installing ruby"
+
 apt-get install -y ruby1.9.3
 
-gem install rubygems-update 
 
+echo ">>> >>> Installing ruby >> gem "
+
+gem install rubygems-update 
 update_rubygems  
 
+
+echo ">>> >>> Installing ruby >> gem >> rake"
 
 gem install rake
