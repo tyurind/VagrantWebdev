@@ -28,3 +28,5 @@ if [ "$(node -v 2>/dev/null | grep 'v0')" = "" ]; then
     echo ">>> ==> npm install (less, http-console)"
     npm install -g less http-console
 fi
+
+rm -r ~/.npm

@@ -1,5 +1,21 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
+"""
+Usage: update-dotdee FILENAME
+
+Generate a (configuration) file based on the contents of the files in the
+directory with the same name as FILENAME but ending in '.d'.
+
+If FILENAME exists but the corresponding directory does not exist yet, the
+directory is created and FILENAME is moved into the directory so that its
+existing contents are preserved.
+"""
+
+# Semi-standard module versioning.
+__version__ = '1.0.10'
+
+
 import os
 import re
 import webbrowser
@@ -9,6 +25,12 @@ import tempfile
 
 
 eol = os.linesep
+
+try:
+    act = sys.argv[1]
+except Exception, e:
+    print "Ну охуеть теперь параметров нет!"
+    sys.exit(1)
 
 # if hasattr(sys, "frozen") and sys.frozen in ("windows_exe", "console_exe"):
 #     current_dir = os.path.dirname(sys.executable)
@@ -30,6 +52,9 @@ params_default = {
 
 
 def main():
+    print "Action: {0}".format(act)
+    sys.exit(1)
+
     params = get_params()
     hosts_path = check_files()
 

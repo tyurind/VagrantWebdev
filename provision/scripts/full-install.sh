@@ -9,9 +9,9 @@ cd /vagrant/provision/scripts
 ./dnsmasq.sh
 ./java.sh
 ./nodejs.sh
-./java.sh
 ./mysql.sh
 ./php.sh
+./php-config.sh
 ./phpmyadmin.sh
 ./vim.sh
 
