@@ -97,7 +97,9 @@ def check_files():
 
 def get_params():
     params = params_default
-    os.system("vagrant ssh -c '/usr/local/sbin/sshc' > tmp.txt")
+    # os.system("vagrant ssh -c '/usr/local/sbin/sshc' > tmp.txt")
+    os.system("vagrant ssh -c \"ip route | grep eth1 | sed 's/.* src \(.*\)/\1/' \" > tmp.txt");
+
     params["server_ip"] = open('tmp.txt', "r").read().strip()
     print "Ip: {0} {1}" .format(params["server_ip"],  eol)
     os.system("rm tmp.txt")
