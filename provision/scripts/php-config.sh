@@ -30,6 +30,11 @@ xdebug.profiler_output_name="cachegrind.out.%s"
 xdebug.trace_enable_trigger=1
 xdebug.trace_output_dir="/vagrant/runtime/xdebug"
 xdebug.trace_output_name="trace.%R"
+
+xdebug.var_display_max_children = 256
+xdebug.var_display_max_data = 1024
+xdebug.var_display_max_depth = 5
+
 EOF
 
 
