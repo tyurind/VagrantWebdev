@@ -16,7 +16,7 @@ else
 fi
 
 
-mkdir -p /usr/local/lib 
+mkdir -p /usr/local/lib
 cd /usr/local/lib
 
 if [ "$(node -v 2>/dev/null | grep 'v0')" = "" ]; then
@@ -25,8 +25,8 @@ if [ "$(node -v 2>/dev/null | grep 'v0')" = "" ]; then
     ln -s /usr/local/lib/node*/bin/node /usr/local/bin/node
     ln -s /usr/local/lib/node*/bin/npm /usr/local/bin/npm
 
-    echo ">>> ==> npm install (less, http-console)"
-    npm install -g less http-console
+    echo ">>> ==> npm install (less, http-console, jsmin)"
+    npm install -g less http-console jsmin
 fi
 
 rm -r ~/.npm
