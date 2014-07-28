@@ -14,23 +14,15 @@ eol = os.linesep
 try:
     act = sys.argv[1]
 except Exception, e:
-    act = "help"
-
-
-
-
-
-
-
-
+    act = "update"
 
 def main():
-    if act == "update": 
+    if act == "update":
         return act_update()
-        
+
     if act == "list":
         return act_list()
-        
+
     return act_help()
     print "Бля, Бля, Бля"
 
