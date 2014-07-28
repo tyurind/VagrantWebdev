@@ -17,3 +17,5 @@ update_rubygems
 echo ">>> >>> Installing ruby >> gem >> rake"
 
 gem install rake
+gem install bundler
+gem install jekyll
