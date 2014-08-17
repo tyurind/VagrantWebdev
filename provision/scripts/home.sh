@@ -10,6 +10,10 @@ DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 
 if [[ "$(id -u)" == "0" ]]; then
     echo "!!!  You is root"
-    exit 1
+    # exit 1
 fi
 
+cp "${DIR}/../files/dot/.bash_aliases" /home/vagrant/
+cp "${DIR}/../files/dot/.vimrc"        /home/vagrant/
+
+chown -R vagrant:vagrant /home/vagrant/

@@ -1,14 +1,6 @@
 #!/bin/bash
 set -e
 
-
-echo ">>> Installing PHP"
-
-apt-get install -y php5  php5-mysql php5-cli php5-mcrypt \
-                   php5-gd php5-xdebug php5-curl php5-dev  php5-xsl 
-
-
-
 echo ">>> Configuring PHP"
 
 echo "# php 53
@@ -42,8 +34,16 @@ Pin-Priority: 600
 EOF
 
 
-PHP=$(dpkg -l|grep php|grep 5.4.4|awk '{print $2}')
+# PHP=$(dpkg -l|grep php|grep 5.4.4|awk '{print $2}')
 
 apt-get update
 # rm -r /etc/php
-apt-get install --reinstall $PHP
+# apt-get install --reinstall $PHP
+
+
+
+echo ">>> Installing PHP"
+
+apt-get install -y php5  php5-mysql php5-cli php5-mcrypt \
+                   php5-gd php5-xdebug php5-curl php5-dev  php5-xsl
+

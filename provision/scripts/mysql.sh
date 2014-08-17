@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-echo ">>> Installing Mysql Server"
+echo ">>> Installing MySQL Server"
 
 apt-get install -y mysql-server mysql-client
 
 
-echo ">>> Configuring Apache"
+echo ">>> Configuring MySQL"
 
 MYSQL_PASSWORD=
 
