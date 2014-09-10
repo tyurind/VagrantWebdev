@@ -6,17 +6,18 @@ TMP_PWD_DIR=$(pwd)
 cd /vagrant/provision/scripts
 
 ./install.sh
-./apache.sh
+./apache/install.sh
 ./dnsmasq.sh
 # ./java.sh
 # ./nodejs.sh
-./mysql.sh
-./php.sh
-./php-config.sh
-./php-phar.sh
+./mysql/install.sh
+./php/install.sh
 ./phpmyadmin.sh
-./vim.sh
+./vim/install.sh
 # ./ruby.sh
+
+cp -r /vagrant/provision/files/* /home/vagrant/
+chown -R vagrant:vagrant /home/vagrant
 
 echo ">>> System clean cache"
 apt-get -y autoremove
