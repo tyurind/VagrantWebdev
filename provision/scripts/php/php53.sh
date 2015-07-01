@@ -40,3 +40,6 @@ apt-get update
 # rm -r /etc/php
 # apt-get install --reinstall $PHP
 
+# VERSION=$(php -v | grep -o -P '(?>PHP )(5[^ ]+) ')
+# VERSION=${VERSION:3:-1}
+export VERSION="5.3.29-1~dotdeb.0"

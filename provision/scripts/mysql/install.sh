@@ -20,7 +20,7 @@ UPDATE mysql.user SET Password=PASSWORD('${MYSQL_PASSWORD}') WHERE User='root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 FLUSH PRIVILEGES;
 " > "$SQLTMP"
-echo $MYSQL_PASSWORD > /home/vagrant/mysqpass
+echo $MYSQL_PASSWORD > /home/vagrant/mysqlpass
 
 # MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
@@ -32,10 +32,9 @@ rm "$SQLTMP"
 echo;
 echo ">>> Restart MySQL"
 echo "--- -------------"
-#service mysql restart
 
-PID=`cat /var/run/mysqld/mysqld.pid`
-kill ${PID} > /dev/null
+# PID=`cat /var/run/mysqld/mysqld.pid`
+# kill ${PID} > /dev/null
 
 service mysql stop
 service mysql start
@@ -56,3 +55,7 @@ mysql -u root "-p${MYSQL_PASSWORD}" < "$SQLTMP"
 rm "$SQLTMP"
 # ===============================================
 
+echo;
+echo ">>> END configuring MySQL"
+echo "--- ---------------------"
+echo;

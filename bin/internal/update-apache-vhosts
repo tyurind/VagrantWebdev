@@ -6,7 +6,6 @@ import sys
 import subprocess
 
 
-
 www_dir     = "/var/www"
 apache_conf = "/etc/apache2/sites-available/default"
 apache_pid  = "/var/run/apache2.pid"
@@ -58,21 +57,6 @@ eol = os.linesep
 """
 
 
-try:
-    act = sys.argv[1]
-except Exception, e:
-    act = "update"
-
-def main():
-    if act == "update":
-        return act_update()
-
-    if act == "list":
-        return act_list()
-
-    return act_help()
-    print "Бля, Бля, Бля"
-
 
 """
 ACTION Functions
@@ -87,6 +71,7 @@ def act_help():
     print "    list     список принятых хостов"
 
 def act_list():
+    print "List"
     return 1
 
 def act_update():
@@ -159,12 +144,20 @@ def is_root():
 
 if __name__ == "__main__":
     try:
-        act = sys.argv[1]
-    except Exception, e:
-        act = "update"
+        act = "help"
+        if len(sys.argv) > 1:
+            act = sys.argv[1]
 
-    try:
-        main()
-    except Exception, e:
-        print "Error"
+        if act == "update":
+            act_update()
+        if act == "list":
+            act_list()
+        if act == "help":
+            act_help()
 
+    except BaseException as e:
+        if "{0}".format(e) == "":
+            pass
+        else:
+            print "Error parse: {0}!".format(e)
+            sys.exit(1)

@@ -142,47 +142,8 @@ export PS1='\n\[$bold\]\[$black\][\[$dk_blue\]\A\[$black\]]-[\[$green\]\u\[$yell
 
 
 ##
-## Aliases
+## History Options
 ##
-
-
-# Interactive operation...
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-
-# Default to human readable figures
-alias df='df -h'
-alias du='du -h'
-
-# Misc :)
-alias less='less -r'                          # raw control characters
-alias whence='type -a'                        # where, of a sort
-alias ls='ls --color=auto' #--file-type       # show differences in colour
-alias grep='grep --color'                     # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
-
-# Some shortcuts for different directory listings
-# alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias ll='ls -hAl -v --file-type --color=auto --group-directories-first --time-style=+%h\ %d\ %R'
-# -----------------------------------------------------------------------------
-#
-# alias ls='ls -F --color=always'
-# alias dir='dir -F --color=always'
-# alias ll='ls -l'
-# alias cp='cp -iv'
-# alias rm='rm -i'
-# alias mv='mv -iv'
-# alias grep='grep --color=auto -in'
-alias ..='cd ..'
-
-
-
-
-# History Options
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls:dir:www *:history*' # Ignore the ls command as well
 export PROMPT_COMMAND="history -a"
@@ -194,7 +155,20 @@ if [ -f ~/.pyrc ]; then
     export PYTHONIOENCODING="UTF-8"
 fi
 
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
 
+##
+## PATH
+##
 # if [ -f ~/.bash_aliases ]; then
 #     . ~/.bash_aliases
 # fi
@@ -203,3 +177,5 @@ if [ -d ~/.local/bin ];  then    export PATH="~/.local/bin:$PATH";  fi
 if [ -d ~/.local/sbin ]; then    export PATH="~/.local/sbin:$PATH"; fi
 if [ -d ~/bin ];         then    export PATH="~/bin:$PATH";         fi
 if [ -d ~/sbin ];        then   export PATH="~/sbin:$PATH";         fi
+
+

@@ -16,11 +16,10 @@ apt-get upgrade -y --no-install-recommends
 echo ">>> System install"
 apt-get install -y python-software-properties \
                    bash-completion whois \
-                   git curl mc make zip \
-                   sqlite sqlite3                              \
+                   git curl mc make zip unzip rar unrar \
+                   sqlite sqlite3 \
                    python-mysqldb python-sqlite python-memcache \
                    python-pip python-imaging \
-
                    # python-mysqldb python-imaging python-pygresql python-psycopg2  python-redis
 
 
