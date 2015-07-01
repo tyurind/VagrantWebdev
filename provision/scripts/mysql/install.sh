@@ -35,8 +35,9 @@ echo "--- -------------"
 #service mysql restart
 
 PID=`cat /var/run/mysqld/mysqld.pid`
-kill ${PID}
+kill ${PID} > /dev/null
 
+service mysql stop
 service mysql start
 # ===============================================
 
