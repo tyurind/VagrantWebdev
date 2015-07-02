@@ -4,20 +4,22 @@ set -e
 
 echo ">>> Installations PHP Dev Tools"
 
-cd /usr/local/bin
+mkdir -p ~/.local/bin
+cd ~/.local/bin
 
 echo ">>> >>> conposer"
-curl -sS https://getcomposer.org/installer | php && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
+curl -sS https://getcomposer.org/installer | php && chmod +x composer.phar && mv composer.phar composer
 
 
 echo ">>> >>> PHPUnit"
-wget --no-check-certificate https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit
+# wget --no-check-certificate https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar && mv phpunit.phar phpunit
+wget -nv --no-check-certificate -O phpunit https://phar.phpunit.de/phpunit-4.7.6.phar && chmod +x phpunit
 
 echo ">>> >>> PHPUnit-Skelgen"
-wget --no-check-certificate https://phar.phpunit.de/phpunit-skelgen.phar && chmod +x phpunit-skelgen.phar && mv phpunit-skelgen.phar /usr/local/bin/phpunit-skelgen
+wget -nv --no-check-certificate -O phpunit-skelgen https://phar.phpunit.de/phpunit-skelgen-2.0.1.phar && chmod +x phpunit-skelgen
 
 echo ">>> >>> PHP Autoload Builder"
-wget --no-check-certificate http://phpab.net/phpab-1.14.2.phar && chmod +x phpab-1.14.2.phar && mv phpab-1.14.2.phar /usr/local/bin/phpab
+wget -nv --no-check-certificate -O phpab http://phpab.net/phpab-1.14.2.phar && chmod +x phpab
 
 # echo "# PHPLoc"
 # wget --no-check-certificate https://phar.phpunit.de/phploc.phar && chmod +x phploc.phar && mv phploc.phar /usr/local/bin/phploc
